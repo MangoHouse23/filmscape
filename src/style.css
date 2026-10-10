@@ -1,0 +1,189 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ========== 设计令牌：「清晨影院」小清新杂志风 ========== */
+:root {
+  /* RGB 三元组，供 tailwind rgba(var(--xxx) / alpha) 使用 */
+  --rgb-paper: 247 244 239;      /* 暖米白纸感底 */
+  --rgb-surface: 253 251 247;    /* 卡片面 */
+  --rgb-ink: 28 38 32;           /* 主文字 深墨 */
+  --rgb-ink2: 118 128 120;       /* 次级文字 */
+  --rgb-brand: 30 58 47;         /* 墨绿主色 */
+  --rgb-brand-soft: 143 169 152; /* 鼠尾草绿 */
+  --rgb-tangerine: 255 138 61;   /* 蜜橘点缀 */
+  --rgb-line: 229 223 211;       /* 分隔线 */
+  --rgb-gold: 216 168 84;        /* 评分金 */
+
+  --font-display: 'Noto Serif SC', 'Songti SC', 'STSong', serif;
+  --font-body: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+
+  --shadow-soft: 0 10px 40px -12px rgb(30 58 47 / 0.18);
+  --shadow-lift: 0 18px 50px -16px rgb(30 58 47 / 0.28);
+  --radius-card: 16px;
+}
+
+.dark {
+  --rgb-paper: 15 30 24;         /* 深夜墨绿 */
+  --rgb-surface: 22 38 31;
+  --rgb-ink: 233 230 220;
+  --rgb-ink2: 158 172 162;
+  --rgb-brand: 92 142 118;       /* 暗色下主色提亮 */
+  --rgb-brand-soft: 74 104 88;
+  --rgb-tangerine: 255 158 96;
+  --rgb-line: 38 55 46;
+  --rgb-gold: 224 186 110;
+
+  --shadow-soft: 0 10px 40px -12px rgb(0 0 0 / 0.5);
+  --shadow-lift: 0 18px 50px -16px rgb(0 0 0 / 0.65);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: rgb(var(--rgb-paper));
+  color: rgb(var(--rgb-ink));
+  line-height: 1.6;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* 纸感噪点 + 柔和氛围光斑 */
+  background-image:
+    radial-gradient(52rem 30rem at 110% -10%, rgb(var(--rgb-brand-soft) / 0.12), transparent 60%),
+    radial-gradient(40rem 26rem at -12% 8%, rgb(var(--rgb-tangerine) / 0.07), transparent 55%);
+  background-attachment: fixed;
+}
+
+::selection {
+  background: rgb(var(--rgb-tangerine) / 0.35);
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+/* 细滚动条 */
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-thumb {
+  background: rgb(var(--rgb-brand-soft) / 0.45);
+  border-radius: 99px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  scrollbar-width: none;
+}
+
+/* 玻璃质感面板 */
+.glass {
+  background: rgb(var(--rgb-surface) / 0.72);
+  backdrop-filter: blur(14px) saturate(1.2);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+}
+
+/* 卡片通用 */
+.card-surface {
+  background: rgb(var(--rgb-surface));
+  border: 1px solid rgb(var(--rgb-line) / 0.7);
+  border-radius: var(--radius-card);
+}
+
+/* 主按钮 */
+.btn-primary {
+  background: rgb(var(--rgb-brand));
+  color: rgb(var(--rgb-paper));
+  border-radius: 999px;
+  font-weight: 600;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+.btn-primary:hover {
+  box-shadow: var(--shadow-soft);
+  transform: translateY(-1px);
+}
+.btn-primary:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn-ghost {
+  border: 1.5px solid rgb(var(--rgb-brand) / 0.35);
+  color: rgb(var(--rgb-brand));
+  border-radius: 999px;
+  font-weight: 600;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.dark .btn-ghost {
+  border-color: rgb(var(--rgb-brand) / 0.55);
+  color: rgb(var(--rgb-ink));
+}
+.btn-ghost:hover {
+  background: rgb(var(--rgb-brand) / 0.08);
+}
+.btn-ghost:active {
+  transform: scale(0.98);
+}
+
+/* 入场动画：交错渐显 */
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.rise-in {
+  animation: rise-in 0.55s cubic-bezier(0.22, 0.8, 0.36, 1) both;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.fade-in {
+  animation: fade-in 0.4s ease both;
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+.float-slow {
+  animation: float-slow 5s ease-in-out infinite;
+}
+
+/* 路由切换过渡 */
+.page-enter-active {
+  transition: opacity 0.28s ease, transform 0.28s ease;
+}
+.page-leave-active {
+  transition: opacity 0.18s ease;
+}
+.page-enter-from {
+  opacity: 0;
+  transform: translateY(10px);
+}
+.page-leave-to {
+  opacity: 0;
+}
+
+/* 海报图 */
+.poster-img {
+  background: rgb(var(--rgb-brand-soft) / 0.18);
+}
+img {
+  -webkit-user-drag: none;
+}

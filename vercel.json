@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/api/source/:sid", "destination": "/api/proxy?sid=:sid" },
+    { "source": "/((?!api/).*)", "destination": "/index.html" }
+  ]
+}
